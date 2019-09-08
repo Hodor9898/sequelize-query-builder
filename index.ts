@@ -66,7 +66,9 @@ module.exports.SequelizeQueryStringParser = (req: any, res: any, next: any) => {
   req.sequelizeOptions = {
     limit: perPage ? perPage : null,
     offset: perPage && page ? perPage * page : null,
-    order: [sOrder],
+    order: [
+        sOrder
+    ],
     where: sFilter
   };
 
@@ -106,5 +108,5 @@ const parseFilter = (filterObject: {
 };
 
 const parseOrder = (orderString: string) => {
-  return orderString.split(",");
+  return orderString.split(" ");
 };

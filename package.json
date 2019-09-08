@@ -1,6 +1,6 @@
 {
   "name": "sequelize-query-builder",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "This package builds query objects for sequelize ORM from a string provided",
   "main": "index.js",
   "scripts": {
