@@ -1,11 +1,13 @@
 {
   "name": "sequelize-query-builder",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "This package builds query objects for sequelize ORM from a string provided",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "test"
+    "test": "test",
+    "format": "prettier --write \"./**/*.ts\" \"./**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,9 @@
   },
   "homepage": "https://github.com/Hodor9898/sequelize-query-builder#readme",
   "devDependencies": {
+    "prettier": "^1.18.2",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {
