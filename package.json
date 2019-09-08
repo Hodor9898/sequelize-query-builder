@@ -1,0 +1,34 @@
+{
+  "name": "sequelize-query-builder",
+  "version": "1.0.0",
+  "description": "This package builds query objects for sequelize ORM from a string provided",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hodor9898/sequelize-query-builder.git"
+  },
+  "keywords": [
+    "sequlize",
+    "orm",
+    "rest",
+    "query",
+    "builder"
+  ],
+  "author": "Matan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hodor9898/sequelize-query-builder/issues"
+  },
+  "homepage": "https://github.com/Hodor9898/sequelize-query-builder#readme",
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^5.16.0"
+  }
+}
