@@ -66,9 +66,7 @@ module.exports.SequelizeQueryStringParser = (req: any, res: any, next: any) => {
   req.sequelizeOptions = {
     limit: perPage ? perPage : null,
     offset: perPage && page ? perPage * page : null,
-    order: [
-        sOrder
-    ],
+    order: [sOrder],
     where: sFilter
   };
 
