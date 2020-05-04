@@ -52,7 +52,7 @@ const OPERTAOR_VALUE_TRANSFORMER: {
 };
 
 module.exports.SequelizeQueryStringParser = (req: any, res: any, next: any) => {
-  const { filter, order, page, perPage } = req.query;
+  const { filter, order, page, perPage, includes_filter, includes } = req.query;
 
   /**
    * Parse query string into sequelize readable objects
@@ -60,14 +60,33 @@ module.exports.SequelizeQueryStringParser = (req: any, res: any, next: any) => {
   const sFilter = filter ? parseFilter(filter) : null;
   const sOrder = order ? parseOrder(order) : null;
 
+  let parsedIncludes = includes ? includes.split(',').map((association: string) => ({ association: association.replace('*', ''), required: association.includes('*') })) : null;
+
+  if(includes_filter) {
+    Object.keys(includes_filter).forEach((key) => {
+      parsedIncludes = parsedIncludes.map((association: { association: string }) => {
+        if(key === association.association) {
+          return {
+            ...association,
+            where: parseFilter(includes_filter[key])
+          }
+        } else {
+          return association;
+        }
+      });
+    });
+  }
+
   /**
    * Set the sequelize query object to the request so that it can be used later
    */
   req.sequelizeOptions = {
+    distinct: parsedIncludes && parsedIncludes.length > 0,
+    include: parsedIncludes,
     limit: perPage ? perPage : null,
     offset: perPage && page ? perPage * page : null,
     order: [sOrder],
-    where: sFilter
+    where: sFilter,
   };
 
   next();
@@ -108,3 +127,6 @@ const parseFilter = (filterObject: {
 const parseOrder = (orderString: string) => {
   return orderString.split(" ");
 };
+
+module.exports.parseFilter = parseFilter;
+module.exports.parseOrder = parseOrder;
