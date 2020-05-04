@@ -60,20 +60,29 @@ module.exports.SequelizeQueryStringParser = (req: any, res: any, next: any) => {
   const sFilter = filter ? parseFilter(filter) : null;
   const sOrder = order ? parseOrder(order) : null;
 
-  let parsedIncludes = includes ? includes.split(',').map((association: string) => ({ association: association.replace('*', ''), required: association.includes('*') })) : null;
+  let parsedIncludes = includes
+    ? includes
+        .split(",")
+        .map((association: string) => ({
+          association: association.replace("*", ""),
+          required: association.includes("*")
+        }))
+    : null;
 
-  if(includes_filter) {
-    Object.keys(includes_filter).forEach((key) => {
-      parsedIncludes = parsedIncludes.map((association: { association: string }) => {
-        if(key === association.association) {
-          return {
-            ...association,
-            where: parseFilter(includes_filter[key])
+  if (includes_filter) {
+    Object.keys(includes_filter).forEach(key => {
+      parsedIncludes = parsedIncludes.map(
+        (association: { association: string }) => {
+          if (key === association.association) {
+            return {
+              ...association,
+              where: parseFilter(includes_filter[key])
+            };
+          } else {
+            return association;
           }
-        } else {
-          return association;
         }
-      });
+      );
     });
   }
 
@@ -86,7 +95,7 @@ module.exports.SequelizeQueryStringParser = (req: any, res: any, next: any) => {
     limit: perPage ? perPage : null,
     offset: perPage && page ? perPage * page : null,
     order: [sOrder],
-    where: sFilter,
+    where: sFilter
   };
 
   next();
